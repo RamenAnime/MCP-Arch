@@ -7,7 +7,7 @@
 # Usage: ./mcp-configure.sh
 #
 
-set -e  # Exit on error
+set -e  # Exit on error
 
 #==========================================
 # COLORS
@@ -24,12 +24,12 @@ RESET='\033[0m'
 clear
 echo -e "${GREEN}"
 cat << "EOF"
-███╗   ███╗ ██████╗██████╗     ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
-████╗ ████║██╔════╝██╔══██╗   ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ 
-██╔████╔██║██║     ██████╔╝   ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
-██║╚██╔╝██║██║     ██╔═══╝    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
-██║ ╚═╝ ██║╚██████╗██║        ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
-╚═╝     ╚═╝ ╚═════╝╚═╝         ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
+███╗   ███╗ ██████╗██████╗     ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
+████╗ ████║██╔════╝██╔══██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ 
+██╔████╔██║██║     ██████╔╝    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
+██║╚██╔╝██║██║     ██╔═══╝     ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
+██║ ╚═╝ ██║╚██████╗██║         ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
+╚═╝     ╚═╝ ╚═════╝╚═╝          ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
 EOF
 echo -e "${RESET}"
 echo -e "${CYAN}Configuration Installer - Theme Only${RESET}"
@@ -42,23 +42,23 @@ echo ""
 echo -e "${GREEN}▶ Performing safety checks...${RESET}"
 
 # Check if running as root
-if [ "$EUID" -eq 0 ]; then 
-    echo -e "${RED}ERROR: Do not run this script as root!${RESET}"
-    echo -e "${YELLOW}Run as your regular user: ./mcp-configure.sh${RESET}"
-    exit 1
+if [ "$EUID" -eq 0 ]; then 
+    echo -e "${RED}ERROR: Do not run this script as root!${RESET}"
+    echo -e "${YELLOW}Run as your regular user: ./mcp-configure.sh${RESET}"
+    exit 1
 fi
 
 # Check if on Arch
 if [ ! -f /etc/arch-release ]; then
-    echo -e "${RED}ERROR: This script is for Arch Linux only${RESET}"
-    exit 1
+    echo -e "${RED}ERROR: This script is for Arch Linux only${RESET}"
+    exit 1
 fi
 
 # Check if i3 is installed
 if ! command -v i3 &> /dev/null; then
-    echo -e "${RED}ERROR: i3 is not installed${RESET}"
-    echo -e "${YELLOW}Please install i3 first: sudo pacman -S i3-wm${RESET}"
-    exit 1
+    echo -e "${RED}ERROR: i3 is not installed${RESET}"
+    echo -e "${YELLOW}Please install i3 first: sudo pacman -S i3-wm${RESET}"
+    exit 1
 fi
 
 echo -e "${GREEN}✓ Safety checks passed${RESET}"
@@ -92,14 +92,14 @@ echo ""
 read -p "Enter choice [1-2]: " COLOR_CHOICE
 
 case $COLOR_CHOICE in
-    2)
-        THEME="cyan"
-        echo -e "${CYAN}Selected: MCP Cyan${RESET}"
-        ;;
-    *)
-        THEME="green"
-        echo -e "${GREEN}Selected: MCP Green${RESET}"
-        ;;
+    2)
+        THEME="cyan"
+        echo -e "${CYAN}Selected: MCP Cyan${RESET}"
+        ;;
+    *)
+        THEME="green"
+        echo -e "${GREEN}Selected: MCP Green${RESET}"
+        ;;
 esac
 echo ""
 
@@ -108,6 +108,7 @@ echo ""
 #==========================================
 echo -e "${GREEN}▶ Creating configuration directories...${RESET}"
 mkdir -p "$HOME/.config/i3"
+mkdir -p "$HOME/.config/i3status"
 mkdir -p "$HOME/.config/polybar"
 mkdir -p "$HOME/.config/picom"
 mkdir -p "$HOME/.config/neofetch"
@@ -120,8 +121,8 @@ echo ""
 # XRESOURCES - MCP GREEN
 #==========================================
 if [ "$THEME" = "green" ]; then
-    echo -e "${GREEN}▶ Installing MCP Green color scheme...${RESET}"
-    cat > "$HOME/.Xresources" << 'EOF'
+    echo -e "${GREEN}▶ Installing MCP Green color scheme...${RESET}"
+    cat > "$HOME/.Xresources" << 'EOF'
 ! MCP XRESOURCES - GREEN THEME
 ! DPI Settings
 Xft.dpi: 96
@@ -133,41 +134,41 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
 ! MCP GREEN COLOR SCHEME
-*.foreground:   #0aff0a
-*.background:   #001100
-*.cursorColor:  #0aff0a
+*.foreground:   #0aff0a
+*.background:   #001100
+*.cursorColor:  #0aff0a
 
 ! Black
-*.color0:       #001100
-*.color8:       #005500
+*.color0:       #001100
+*.color8:       #005500
 
 ! Red
-*.color1:       #007700
-*.color9:       #009900
+*.color1:       #007700
+*.color9:       #009900
 
 ! Green
-*.color2:       #00aa00
-*.color10:      #00cc00
+*.color2:       #00aa00
+*.color10:      #00cc00
 
 ! Yellow
-*.color3:       #00ff00
-*.color11:      #00ff00
+*.color3:       #00ff00
+*.color11:      #00ff00
 
 ! Blue
-*.color4:       #00aa00
-*.color12:      #00dd00
+*.color4:       #00aa00
+*.color12:      #00dd00
 
 ! Magenta
-*.color5:       #007700
-*.color13:      #00aa00
+*.color5:       #007700
+*.color13:      #00aa00
 
 ! Cyan
-*.color6:       #0aff0a
-*.color14:      #0aff0a
+*.color6:       #0aff0a
+*.color14:      #0aff0a
 
 ! White
-*.color7:       #00ff00
-*.color15:      #66ff66
+*.color7:       #00ff00
+*.color15:      #66ff66
 EOF
 fi
 
@@ -175,8 +176,8 @@ fi
 # XRESOURCES - MCP CYAN
 #==========================================
 if [ "$THEME" = "cyan" ]; then
-    echo -e "${CYAN}▶ Installing MCP Cyan color scheme...${RESET}"
-    cat > "$HOME/.Xresources" << 'EOF'
+    echo -e "${CYAN}▶ Installing MCP Cyan color scheme...${RESET}"
+    cat > "$HOME/.Xresources" << 'EOF'
 ! MCP XRESOURCES - CYAN THEME
 ! DPI Settings
 Xft.dpi: 96
@@ -188,41 +189,41 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
 ! MCP CYAN COLOR SCHEME
-*.foreground:   #6fc3df
-*.background:   #001520
-*.cursorColor:  #6fc3df
+*.foreground:   #6fc3df
+*.background:   #001520
+*.cursorColor:  #6fc3df
 
 ! Black
-*.color0:       #001520
-*.color8:       #2a4a5c
+*.color0:       #001520
+*.color8:       #2a4a5c
 
 ! Red
-*.color1:       #1a4a5c
-*.color9:       #3a6a7c
+*.color1:       #1a4a5c
+*.color9:       #3a6a7c
 
 ! Green
-*.color2:       #2e7d9b
-*.color10:      #4e9dbb
+*.color2:       #2e7d9b
+*.color10:      #4e9dbb
 
 ! Yellow
-*.color3:       #6fc3df
-*.color11:      #8fd3ef
+*.color3:       #6fc3df
+*.color11:      #8fd3ef
 
 ! Blue
-*.color4:       #5eb3d1
-*.color12:      #7ed3f1
+*.color4:       #5eb3d1
+*.color12:      #7ed3f1
 
 ! Magenta
-*.color5:       #4a9db8
-*.color13:      #6abdd8
+*.color5:       #4a9db8
+*.color13:      #6abdd8
 
 ! Cyan
-*.color6:       #6fc3df
-*.color14:      #8fd3ef
+*.color6:       #6fc3df
+*.color14:      #8fd3ef
 
 ! White
-*.color7:       #a0d9ea
-*.color15:      #c0f9ff
+*.color7:       #a0d9ea
+*.color15:      #c0f9ff
 EOF
 fi
 
@@ -238,23 +239,24 @@ echo -e "${GREEN}▶ Configuring i3 window manager...${RESET}"
 
 # Set colors based on theme
 if [ "$THEME" = "green" ]; then
-    FOCUSED_COLOR="#0aff0a"
-    BG_COLOR="#001100"
-    INACTIVE_COLOR="#007700"
-    URGENT_COLOR="#ff0000"
+    FOCUSED_COLOR="#0aff0a"
+    BG_COLOR="#001100"
+    INACTIVE_COLOR="#007700"
+    URGENT_COLOR="#ff0000"
 else
-    FOCUSED_COLOR="#6fc3df"
-    BG_COLOR="#001520"
-    INACTIVE_COLOR="#2e7d9b"
-    URGENT_COLOR="#ff0000"
+    FOCUSED_COLOR="#6fc3df"
+    BG_COLOR="#001520"
+    INACTIVE_COLOR="#2e7d9b"
+    URGENT_COLOR="#ff0000"
 fi
 
+# FIX: Escaped i3 variables (e.g., $mod -> \$mod) to prevent shell expansion.
 cat > "$HOME/.config/i3/config" << EOF
 # i3 config - MCP THEME
 # Master Control Program Configuration
 
 ###################
-# THEME SETTINGS  #
+# THEME SETTINGS  #
 ###################
 
 # Set gaps (requires i3-gaps)
@@ -267,14 +269,14 @@ for_window [class=".*"] border pixel 2
 default_border pixel 2
 
 # Colors - MCP $THEME Theme
-client.focused          $FOCUSED_COLOR $BG_COLOR $FOCUSED_COLOR $FOCUSED_COLOR $FOCUSED_COLOR
+client.focused          $FOCUSED_COLOR $BG_COLOR $FOCUSED_COLOR $FOCUSED_COLOR $FOCUSED_COLOR
 client.focused_inactive $INACTIVE_COLOR $BG_COLOR $INACTIVE_COLOR $INACTIVE_COLOR $INACTIVE_COLOR
-client.unfocused        $INACTIVE_COLOR $BG_COLOR $INACTIVE_COLOR $INACTIVE_COLOR $INACTIVE_COLOR
-client.urgent           $URGENT_COLOR $BG_COLOR $URGENT_COLOR $URGENT_COLOR $URGENT_COLOR
-client.background       $BG_COLOR
+client.unfocused        $INACTIVE_COLOR $BG_COLOR $INACTIVE_COLOR $INACTIVE_COLOR $INACTIVE_COLOR
+client.urgent           $URGENT_COLOR $BG_COLOR $URGENT_COLOR $URGENT_COLOR $URGENT_COLOR
+client.background       $BG_COLOR
 
 ###################
-# BASIC SETTINGS  #
+# BASIC SETTINGS  #
 ###################
 
 set \$mod Mod4
@@ -282,7 +284,7 @@ font pango:monospace 10
 floating_modifier \$mod
 
 ###################
-# KEYBINDINGS     #
+# KEYBINDINGS     #
 ###################
 
 # Start terminal
@@ -331,7 +333,7 @@ bindsym \$mod+Shift+space floating toggle
 bindsym \$mod+space focus mode_toggle
 
 ###################
-# WORKSPACES      #
+# WORKSPACES      #
 ###################
 
 set \$ws1 "1"
@@ -368,7 +370,7 @@ bindsym \$mod+Shift+9 move container to workspace \$ws9
 bindsym \$mod+Shift+0 move container to workspace \$ws10
 
 ###################
-# I3 CONTROL      #
+# I3 CONTROL      #
 ###################
 
 bindsym \$mod+Shift+c reload
@@ -377,23 +379,23 @@ bindsym \$mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg 
 
 # Resize mode
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
 
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 bindsym \$mod+r mode "resize"
 
 ###################
-# STARTUP         #
+# STARTUP         #
 ###################
 
 # Load Xresources
@@ -401,19 +403,19 @@ exec --no-startup-id xrdb -merge ~/.Xresources
 
 # Start i3bar with custom colors
 bar {
-    status_command i3status
-    position top
+    status_command i3status --config ~/.config/i3status/config
+    position top
 
-    colors {
-        background $BG_COLOR
-        statusline $FOCUSED_COLOR
-        separator  $INACTIVE_COLOR
+    colors {
+        background $BG_COLOR
+        statusline $FOCUSED_COLOR
+        separator  $INACTIVE_COLOR
 
-        focused_workspace  $FOCUSED_COLOR $FOCUSED_COLOR $BG_COLOR
-        active_workspace   $INACTIVE_COLOR $INACTIVE_COLOR $BG_COLOR
-        inactive_workspace $BG_COLOR $BG_COLOR $FOCUSED_COLOR
-        urgent_workspace   $URGENT_COLOR $URGENT_COLOR $BG_COLOR
-    }
+        focused_workspace  $FOCUSED_COLOR $FOCUSED_COLOR $BG_COLOR
+        active_workspace   $INACTIVE_COLOR $INACTIVE_COLOR $BG_COLOR
+        inactive_workspace $BG_COLOR $BG_COLOR $FOCUSED_COLOR
+        urgent_workspace   $URGENT_COLOR $URGENT_COLOR $BG_COLOR
+    }
 }
 EOF
 
@@ -424,17 +426,17 @@ echo ""
 # I3STATUS CONFIGURATION
 #==========================================
 echo -e "${GREEN}▶ Configuring i3status...${RESET}"
-mkdir -p "$HOME/.config/i3status"
 
-cat > "$HOME/.config/i3status/config" << 'EOF'
+# FIX: Dynamically set color_good based on theme
+cat > "$HOME/.config/i3status/config" << EOF
 # i3status - MCP Theme
 
 general {
-    colors = true
-    interval = 1
-    color_good = "#0aff0a"
-    color_degraded = "#ffff00"
-    color_bad = "#ff0000"
+    colors = true
+    interval = 1
+    color_good = "$FOCUSED_COLOR"
+    color_degraded = "#ffff00"
+    color_bad = "#ff0000"
 }
 
 order += "wireless _first_"
@@ -445,31 +447,31 @@ order += "cpu_usage"
 order += "tztime local"
 
 wireless _first_ {
-    format_up = "W: %essid %quality"
-    format_down = "W: down"
+    format_up = "W: %essid %quality"
+    format_down = "W: down"
 }
 
 ethernet _first_ {
-    format_up = "E: %ip"
-    format_down = "E: down"
+    format_up = "E: %ip"
+    format_down = "E: down"
 }
 
 disk "/" {
-    format = "DISK: %percentage_used"
+    format = "DISK: %percentage_used"
 }
 
 memory {
-    format = "RAM: %percentage_used"
-    threshold_degraded = "10%"
-    threshold_critical = "5%"
+    format = "RAM: %percentage_used"
+    threshold_degraded = "10%"
+    threshold_critical = "5%"
 }
 
 cpu_usage {
-    format = "CPU: %usage"
+    format = "CPU: %usage"
 }
 
 tztime local {
-    format = "%Y-%m-%d %H:%M:%S"
+    format = "%Y-%m-%d %H:%M:%S"
 }
 EOF
 
@@ -481,28 +483,54 @@ echo ""
 #==========================================
 echo -e "${GREEN}▶ Installing Vim colorscheme...${RESET}"
 
+# FIX: Create theme-specific vim colorschemes
+if [ "$THEME" = "green" ]; then
 cat > "$HOME/.vim/colors/mcp.vim" << 'EOF'
-" MCP colorscheme for Vim
+" MCP colorscheme for Vim - GREEN
 set background=dark
 hi clear
 if exists("syntax_on")
-  syntax reset
+  syntax reset
 endif
 let g:colors_name = "mcp"
 
 " Basic colors
-hi Normal          ctermfg=46  ctermbg=0   guifg=#0aff0a guibg=#001100
-hi Comment         ctermfg=28  guifg=#007700
-hi Constant        ctermfg=82  guifg=#00ff00
-hi Identifier      ctermfg=46  guifg=#0aff0a
-hi Statement       ctermfg=46  guifg=#0aff0a gui=bold
-hi PreProc         ctermfg=82  guifg=#00ff00
-hi Type            ctermfg=46  guifg=#0aff0a
-hi Special         ctermfg=82  guifg=#00ff00
-hi LineNr          ctermfg=28  guifg=#007700
-hi CursorLine      ctermbg=233 guibg=#003300
-hi Visual          ctermfg=0   ctermbg=28  guifg=#001100 guibg=#007700
+hi Normal         ctermfg=46  ctermbg=0   guifg=#0aff0a guibg=#001100
+hi Comment        ctermfg=28  guifg=#007700
+hi Constant       ctermfg=82  guifg=#00ff00
+hi Identifier     ctermfg=46  guifg=#0aff0a
+hi Statement      ctermfg=46  guifg=#0aff0a gui=bold
+hi PreProc        ctermfg=82  guifg=#00ff00
+hi Type           ctermfg=46  guifg=#0aff0a
+hi Special        ctermfg=82  guifg=#00ff00
+hi LineNr         ctermfg=28  guifg=#007700
+hi CursorLine     ctermbg=233 guibg=#003300
+hi Visual         ctermfg=0   ctermbg=28  guifg=#001100 guibg=#007700
 EOF
+else # Cyan theme
+cat > "$HOME/.vim/colors/mcp.vim" << 'EOF'
+" MCP colorscheme for Vim - CYAN
+set background=dark
+hi clear
+if exists("syntax_on")
+  syntax reset
+endif
+let g:colors_name = "mcp"
+
+" Basic colors
+hi Normal         ctermfg=81  ctermbg=17  guifg=#6fc3df guibg=#001520
+hi Comment        ctermfg=31  guifg=#2e7d9b
+hi Constant       ctermfg=123 guifg=#8fd3ef
+hi Identifier     ctermfg=81  guifg=#6fc3df
+hi Statement      ctermfg=81  guifg=#6fc3df gui=bold
+hi PreProc        ctermfg=123 guifg=#8fd3ef
+hi Type           ctermfg=81  guifg=#6fc3df
+hi Special        ctermfg=123 guifg=#8fd3ef
+hi LineNr         ctermfg=31  guifg=#2e7d9b
+hi CursorLine     ctermbg=234 guibg=#1a4a5c
+hi Visual         ctermfg=17  ctermbg=31  guifg=#001520 guibg=#2e7d9b
+EOF
+fi
 
 echo -e "${GREEN}✓ Vim colorscheme installed${RESET}"
 echo ""
@@ -514,16 +542,17 @@ echo -e "${GREEN}▶ Adding MCP aliases to shell...${RESET}"
 
 # Detect shell
 if [ -n "$ZSH_VERSION" ] || [ -f "$HOME/.zshrc" ]; then
-    SHELL_RC="$HOME/.zshrc"
+    SHELL_RC="$HOME/.zshrc"
 elif [ -n "$BASH_VERSION" ] || [ -f "$HOME/.bashrc" ]; then
-    SHELL_RC="$HOME/.bashrc"
+    SHELL_RC="$HOME/.bashrc"
 else
-    SHELL_RC="$HOME/.bashrc"
+    # Default to .bashrc if we can't be sure
+    SHELL_RC="$HOME/.bashrc"
 fi
 
 # Add aliases if not already present
 if ! grep -q "# MCP Aliases" "$SHELL_RC" 2>/dev/null; then
-    cat >> "$SHELL_RC" << 'EOF'
+    cat >> "$SHELL_RC" << 'EOF'
 
 # MCP Aliases
 alias ls='ls --color=auto'
@@ -531,9 +560,9 @@ alias ll='ls -lh'
 alias la='ls -lha'
 alias grep='grep --color=auto'
 EOF
-    echo -e "${GREEN}✓ Shell aliases added to $SHELL_RC${RESET}"
+    echo -e "${GREEN}✓ Shell aliases added to $SHELL_RC${RESET}"
 else
-    echo -e "${YELLOW}Shell aliases already present${RESET}"
+    echo -e "${YELLOW}Shell aliases already present${RESET}"
 fi
 echo ""
 
@@ -546,24 +575,24 @@ echo -e "${GREEN}MCP CONFIGURATION COMPLETE!${RESET}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 echo ""
 echo -e "${CYAN}Applied configurations:${RESET}"
-echo -e "  ✓ Color scheme ($THEME)"
-echo -e "  ✓ i3 window manager theme"
-echo -e "  ✓ i3bar/i3status theme"
-echo -e "  ✓ Vim colorscheme"
-echo -e "  ✓ Shell aliases"
+echo -e "  ✓ Color scheme ($THEME)"
+echo -e "  ✓ i3 window manager theme"
+echo -e "  ✓ i3status theme"
+echo -e "  ✓ Vim colorscheme"
+echo -e "  ✓ Shell aliases"
 echo ""
 echo -e "${CYAN}Your original configs backed up to:${RESET}"
-echo -e "  ${BACKUP_DIR}"
+echo -e "  ${BACKUP_DIR}"
 echo ""
 echo -e "${YELLOW}To activate changes:${RESET}"
-echo -e "  1. Reload i3: ${GREEN}Mod+Shift+r${RESET}"
-echo -e "  2. Open new terminal to see colors"
-echo -e "  3. For Vim: ${GREEN}:colorscheme mcp${RESET}"
+echo -e "  1. Reload i3: ${GREEN}Mod+Shift+r${RESET}"
+echo -e "  2. Open new terminal to see colors"
+echo -e "  3. For Vim: ${GREEN}:colorscheme mcp${RESET}"
 echo ""
 echo -e "${CYAN}Optional next steps:${RESET}"
-echo -e "  • Install cool-retro-term: ${GREEN}sudo pacman -S cool-retro-term${RESET}"
-echo -e "  • Install polybar: ${GREEN}sudo pacman -S polybar${RESET}"
-echo -e "  • Install picom: ${GREEN}sudo pacman -S picom${RESET}"
+echo -e "  • Install cool-retro-term: ${GREEN}sudo pacman -S cool-retro-term${RESET}"
+echo -e "  • Install polybar: ${GREEN}sudo pacman -S polybar${RESET}"
+echo -e "  • Install picom: ${GREEN}sudo pacman -S picom${RESET}"
 echo ""
 echo -e "${GREEN}MCP System Status: ONLINE${RESET}"
 echo -e "${GREEN}Access Level: GRANTED${RESET}"
