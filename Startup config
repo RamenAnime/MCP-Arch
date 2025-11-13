@@ -1,0 +1,27 @@
+###################
+# STARTUP         #
+###################
+
+# Load Xresources (colors)
+exec --no-startup-id xrdb -merge ~/.Xresources
+
+# Compositor for transparency and effects
+exec --no-startup-id picom
+
+# Network manager tray icon
+exec --no-startup-id nm-applet
+
+# Notification daemon
+exec --no-startup-id dunst
+
+# Startup sound (system login sound)
+exec --no-startup-id paplay /usr/share/sounds/freedesktop/stereo/service-login.oga
+
+# Workspace 1: Main cool-retro-term with welcome message
+exec --no-startup-id i3-msg 'workspace 1; exec cool-retro-term -e bash -c "figlet -f banner MCP SYSTEM && echo && echo Master Control Program - ONLINE && echo System Status: OPERATIONAL && echo && fastfetch && exec bash"'
+
+# Workspace 10: System monitor (htop always available)
+exec --no-startup-id i3-msg 'workspace 10; exec cool-retro-term -e htop'
+
+# Return to workspace 1
+exec --no-startup-id i3-msg 'workspace 1'
