@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Quick health check after Kyoto Learn OS install
+set -euo pipefail
+
+ok=0
+fail=0
+check() {
+  if eval "$2" >/dev/null 2>&1; then
+    printf "  \033[32mOK\033[0m  %s\n" "$1"
+    ok=$((ok + 1))
+  else
+    printf "  \033[31mFAIL\033[0m %s\n" "$1"
+    fail=$((fail + 1))
+  fi
+}
+
+echo "Kyoto Learn OS - system verify"
+echo "----------------------------"
+check "pacman" "command -v pacman"
+check "NetworkManager" "systemctl is-enabled NetworkManager"
+check "i3" "command -v i3"
+check "alacritty" "command -v alacritty"
+check "polybar" "command -v polybar"
+check "picom" "command -v picom"
+check "jq" "command -v jq"
+check "kyoto-learn" "command -v kyoto-learn"
+check "AUR helper" "command -v yay || command -v paru"
+check "i3 config" "test -f \"${HOME}/.config/i3/config\""
+check "polybar launch" "test -x \"${HOME}/.config/polybar/launch.sh\""
+check "ly (optional)" "systemctl is-enabled ly 2>/dev/null || test -f \"${HOME}/.xinitrc\""
+
+echo "----------------------------"
+echo "Passed: $ok  Failed: $fail"
+if [ "$fail" -gt 0 ]; then
+  echo "Fix failures, then run: Mod+Shift+c (reload i3) or reboot"
+  exit 1
+fi
+echo "Desktop should be ready. Log in (ly or startx), then: kyoto-learn"

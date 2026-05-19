@@ -1,40 +1,51 @@
-# Kyoto Learn OS (mcp-arch)
+# Kyoto Learn OS (MCP-Arch)
 
-Arch Linux installer for an immersive **Kyoto dialect Japanese** learning desktop. Teaches reading and writing from zero knowledge through **hiragana**, **katakana**, and **kanji**, with vocabulary and Kyoto-flavored speech, using mixed English and Japanese in the shell and lesson app.
+Arch Linux desktop for learning **Kyoto dialect Japanese** from zero: hiragana, katakana, kanji, vocabulary, and immersive EN/JA lessons (`kyoto-learn`).
 
-## What it does
-- Installs i3-gaps, terminal, polybar, fonts (including CJK), `jq`, and utilities.
-- Installs **Kyoto Learn** (`kyoto-learn` CLI) with full curriculum under `/usr/share/kyoto-learn`.
-- Immersive login: bilingual motd, **Mod+Shift+J** opens lessons in i3.
-- Installs AUR packages using `yay` (default) or `paru` if chosen.
-- Optional retro terminal theme (green or cyan).
-- Progress saved in `~/.local/share/kyoto-learn/progress.json`.
+Designed for an **easy install in a VM** or as a **daily driver** after a standard Arch base install.
 
-## Usage
-1. Upload `mcp-arch.sh` to your Arch machine (or clone repo).
-2. Make it executable:
-   ```bash
-   chmod +x mcp-arch.sh
-   ```
-3. Run it as root or with sudo:
-   ```bash
-   sudo ./mcp-arch.sh
-   ```
+## Quick install
 
-The installer will prompt for:
-- AUR helper choice (yay default)
-- Theme choice (green or cyan terminal)
+**You need Arch Linux installed first** (user with sudo). Then:
 
-After install, run **`kyoto-learn`** to start lessons. See [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) and [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md).
+```bash
+git clone https://github.com/RamenAnime/MCP-Arch.git
+cd MCP-Arch
+chmod +x mcp-arch.sh easy-install.sh
+sudo ./mcp-arch.sh
+```
 
-The script may reboot automatically after a 60 second countdown (you can cancel with Ctrl-C).
+One-liner:
 
-## Notes & Safety
-- Review the script before running. It installs packages and writes config files.
-- The script attempts to back up existing files by renaming them with a `.bak.TIMESTAMP` suffix.
-- Some steps (GRUB, Plymouth theme) may require manual verification depending on your system and `/boot` layout.
-- The script uses `sudo` where appropriate if not run as root.
+```bash
+curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
+```
+
+Full guide: [docs/INSTALL.md](docs/INSTALL.md)
+
+## What the installer sets up
+
+| Area | Details |
+|------|---------|
+| **pacman** | NetworkManager, firmware, pipewire, fonts, i3, alacritty, polybar, picom, firefox, jq |
+| **AUR** | yay or paru, ly login, i3lock-color (optional packages skip safely) |
+| **VM** | open-vm-tools, qemu-guest-agent, spice, guest video drivers |
+| **UI** | Working i3 config, polybar, lock screen, solid wallpaper (no broken image paths) |
+| **Lessons** | `kyoto-learn` CLI + curriculum in `/usr/share/kyoto-learn` |
+
+## After install
+
+```bash
+system-verify    # check pacman, network, UI, lessons
+kyoto-learn      # start course (or Mod+Shift+J in i3)
+```
+
+## Docs
+
+- [docs/INSTALL.md](docs/INSTALL.md) - VM vs physical, Arch prerequisites, troubleshooting
+- [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) - 0% to Rosetta-ready path
+- [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md) - study habits
 
 ## License
-MIT - feel free to fork and adapt.
 
+MIT - feel free to fork and adapt.

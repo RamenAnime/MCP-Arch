@@ -1,0 +1,67 @@
+# Kyoto Learn OS - i3 config (stock i3-wm, works in VM and on hardware)
+set $mod Mod4
+
+font pango:monospace 10
+floating_modifier $mod
+
+client.focused          @FG@ @BG@ @FG@ @FG@ @FG@
+client.focused_inactive @INACTIVE@ @BG@ @INACTIVE@ @INACTIVE@ @INACTIVE@
+client.unfocused        @INACTIVE@ @BG@ @INACTIVE@ @INACTIVE@ @INACTIVE@
+client.urgent           @URGENT@ @BG@ @URGENT@ @URGENT@ @URGENT@
+
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec rofi -show drun || dmenu_run
+bindsym $mod+d exec dmenu_run
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+b split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+set $ws1 "1:learn"
+set $ws2 "2:web"
+set $ws3 "3:term"
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+
+# Kyoto Learn lessons
+bindsym $mod+Shift+j exec kyoto-learn
+
+# Lock (i3lock-color or i3lock)
+bindsym $mod+Shift+x exec --no-startup-id ~/.config/i3/lock.sh
+
+exec --no-startup-id xrdb -merge ~/.Xresources
+exec --no-startup-id xsetroot -solid @BG@
+exec --no-startup-id picom -b || true
+exec --no-startup-id nm-applet || true
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 || true
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# First workspace: welcome terminal
+exec --no-startup-id i3-msg 'workspace 1:learn; exec alacritty -e bash -lc "kyoto-motd 2>/dev/null; echo; echo Shortcuts:; echo \"  Mod+Return = terminal\"; echo \"  Mod+Shift+J = kyoto-learn\"; echo \"  Mod+d = launcher\"; exec bash"'

@@ -56,11 +56,4 @@ BASHKYOTO
   $SUDO_CMD chown "${TARGET_USER}:${TARGET_USER}" "$BASHRC"
 fi
 
-# i3 keybind: Mod+Shift+J opens lesson app
-I3_CFG="${TARGET_HOME}/.config/i3/config"
-if [ -f "$I3_CFG" ] && ! grep -q "kyoto-learn" "$I3_CFG" 2>/dev/null; then
-  $SUDO_CMD bash -c "echo 'bindsym \$mod+Shift+j exec kyoto-learn' >> '$I3_CFG'"
-  $SUDO_CMD chown "${TARGET_USER}:${TARGET_USER}" "$I3_CFG"
-fi
-
-echoinfo "Kyoto Learn installed. Run: kyoto-learn"
+echoinfo "Kyoto Learn installed. Run: kyoto-learn (i3: Mod+Shift+J)"
