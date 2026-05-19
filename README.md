@@ -2,19 +2,28 @@
 
 Arch Linux desktop for learning **Kyoto dialect Japanese** from zero: hiragana, katakana, kanji, vocabulary, and immersive EN/JA lessons (`kyoto-learn`).
 
-Designed for an **easy install in a VM** or as a **daily driver** after a standard Arch base install.
+This is a **full desktop experience change** (UI, language integration, lessons), not a small script add-on.
 
-## Already on Arch?
+## Two install paths (same desktop at the end)
 
-You do not need to reinstall. See **[docs/EXISTING-ARCH.md](docs/EXISTING-ARCH.md)** for the fastest path (one command, pick profile **3**).
+| You are... | Read this |
+|------------|-------------|
+| **Need to install Arch first** | [docs/INSTALL-FRESH-ARCH.md](docs/INSTALL-FRESH-ARCH.md) |
+| **Already on Arch** | [docs/INSTALL-EXISTING-ARCH.md](docs/INSTALL-EXISTING-ARCH.md) |
+
+Index: [docs/INSTALL.md](docs/INSTALL.md)
+
+## Quick install (Arch + sudo user ready)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
 ```
 
-## Quick install (fresh Arch base)
+- **Arch not installed yet?** Installer choice **1** points you to the Arch guide, then you run again.
+- **Arch ready on a PC?** Choose **2** for full Kyoto Learn desktop.
+- **Arch ready in a VM?** Choose **3** for full desktop + guest tools.
 
-**You need Arch Linux installed first** (user with sudo). Then:
+Or clone:
 
 ```bash
 git clone https://github.com/RamenAnime/MCP-Arch.git
@@ -23,45 +32,36 @@ chmod +x mcp-arch.sh easy-install.sh
 sudo ./mcp-arch.sh
 ```
 
-One-liner:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
-```
-
-Full guide: [docs/INSTALL.md](docs/INSTALL.md)
-
-## What the installer sets up
+## What the full install sets up
 
 | Area | Details |
 |------|---------|
-| **pacman** | NetworkManager, firmware, pipewire, fonts, i3, alacritty, polybar, picom, firefox, jq |
-| **AUR** | yay or paru, ly login, i3lock-color (optional packages skip safely) |
-| **VM** | open-vm-tools, qemu-guest-agent, spice, guest video drivers |
-| **UI** | Working i3 config, polybar, lock screen, solid wallpaper (no broken image paths) |
-| **Lessons** | `kyoto-learn` CLI + curriculum in `/usr/share/kyoto-learn` |
+| **Desktop** | i3, polybar, picom, alacritty, rofi, lock screen |
+| **Japanese** | `kyoto-learn`, curriculum, bilingual motd, Mod+Shift+J in i3 |
+| **System** | NetworkManager, pipewire, Noto CJK fonts, firefox |
+| **AUR** | yay or paru, optional ly and i3lock-color |
+| **Existing DE** | GDM/SDDM kept when present; log into i3 when you want the full experience |
 
 ## After install
 
 ```bash
-system-verify    # check pacman, network, UI, lessons
-kyoto-learn      # start course (or Mod+Shift+J in i3)
+system-verify
+kyoto-learn
 ```
 
-## Documentation (full index)
+## Documentation
 
-**[docs/README.md](docs/README.md)** - start here
+**[docs/README.md](docs/README.md)** - full index
 
 | Guide | Contents |
 |-------|----------|
-| [docs/EXISTING-ARCH.md](docs/EXISTING-ARCH.md) | **Already on Arch:** easy install, profile 3, lessons-only |
-| [docs/INSTALL.md](docs/INSTALL.md) | VM or main PC install, prerequisites, troubleshooting |
-| [docs/SYSTEM.md](docs/SYSTEM.md) | pacman, AUR, UI stack, updates, verification |
-| [docs/COMMANDS.md](docs/COMMANDS.md) | Commands and i3 / kyoto-learn shortcuts |
-| [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) | Levels 0-10, three writing systems, Rosetta-ready |
-| [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md) | First-language study habits |
+| [docs/INSTALL-FRESH-ARCH.md](docs/INSTALL-FRESH-ARCH.md) | Install Arch, then full Kyoto Learn OS |
+| [docs/INSTALL-EXISTING-ARCH.md](docs/INSTALL-EXISTING-ARCH.md) | Full desktop on existing Arch (safe coexistence) |
+| [docs/SYSTEM.md](docs/SYSTEM.md) | pacman, AUR, UI, updates |
+| [docs/COMMANDS.md](docs/COMMANDS.md) | Shortcuts and commands |
+| [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) | Levels 0-10 |
 
-Copy style: use `-` between words, not em dashes. No UI watermarks.
+Copy style: hyphen `-` between words, not em dashes. No UI watermarks.
 
 ## License
 

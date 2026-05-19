@@ -2,14 +2,16 @@
 
 ## Installer (once)
 
-**Already on Arch** (see [EXISTING-ARCH.md](EXISTING-ARCH.md)):
+**Arch already installed** (full desktop, see [INSTALL-EXISTING-ARCH.md](INSTALL-EXISTING-ARCH.md)):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
-# profile 3) Desktop only
+# installer: 2) PC/laptop  or  3) VM (full desktop both ways)
 ```
 
-**Lessons only** (no i3):
+**Need Arch first?** See [INSTALL-FRESH-ARCH.md](INSTALL-FRESH-ARCH.md).
+
+**Lessons only** (advanced, no i3):
 
 ```bash
 git clone https://github.com/RamenAnime/MCP-Arch.git

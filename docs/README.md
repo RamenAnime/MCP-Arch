@@ -1,72 +1,56 @@
 # Kyoto Learn OS documentation
 
-All guides for installing, using, and studying on this system. Use a normal hyphen `-` in new copy, not an em dash.
+Kyoto Learn OS is a **full Arch desktop** for learning Japanese (hiragana, katakana, kanji, vocabulary, Kyoto dialect). Two install paths, same end result.
 
-## Start here
+## Pick your path
 
-| Doc | Who it is for |
-|-----|----------------|
-| **[EXISTING-ARCH.md](EXISTING-ARCH.md)** | **You already run Arch and want an easy add-on install** |
-| [INSTALL.md](INSTALL.md) | First-time install on Arch (VM or main PC) |
-| [SYSTEM.md](SYSTEM.md) | pacman, AUR, desktop UI, updates, verification |
-| [COMMANDS.md](COMMANDS.md) | Commands and keyboard shortcuts |
-| [LEARNING_PATH.md](LEARNING_PATH.md) | Course levels 0-10 and Rosetta-ready goals |
-| [HOW-TO-LEARN.md](HOW-TO-LEARN.md) | Study habits (first-language style) |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Text style, curriculum, installer notes |
+| Path | Guide | When |
+|------|-------|------|
+| **1 - Fresh Arch** | **[INSTALL-FRESH-ARCH.md](INSTALL-FRESH-ARCH.md)** | You still need to install Arch Linux |
+| **2 - Existing Arch** | **[INSTALL-EXISTING-ARCH.md](INSTALL-EXISTING-ARCH.md)** | Arch is already installed |
 
-## Quick paths
+Overview and links: [INSTALL.md](INSTALL.md)
 
-**Install in a VM**
-
-1. Install Arch Linux (official guide on wiki.archlinux.org).
-2. Create a user in `wheel` with sudo.
-3. Run [INSTALL.md](INSTALL.md) easy-install or `sudo ./mcp-arch.sh`.
-4. Choose profile **1) Virtual machine**.
-5. After install: `system-verify`, then log in and run `kyoto-learn`.
-
-**Install on daily hardware**
-
-Same as above, but choose profile **2) Physical PC** and complete GRUB if you have not already.
-
-**Already on Arch (full desktop + lessons)**
-
-See **[EXISTING-ARCH.md](EXISTING-ARCH.md)** or:
+## Quick install (Arch already working)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
-# profile 3) Desktop only
 ```
 
-**Lessons only (keep GNOME/KDE/Hyprland, no i3)**
+In the installer: **2** for a PC/laptop, **3** if Arch runs inside a VM. Both install the **full** desktop.
 
-```bash
-git clone https://github.com/RamenAnime/MCP-Arch.git
-cd MCP-Arch
-sudo ./install/lessons-only.sh
-kyoto-learn
-```
+## Other guides
 
-## What this project includes
+| Doc | Contents |
+|-----|----------|
+| [SYSTEM.md](SYSTEM.md) | pacman, AUR, UI stack, updates, verification |
+| [COMMANDS.md](COMMANDS.md) | Commands and keyboard shortcuts |
+| [LEARNING_PATH.md](LEARNING_PATH.md) | Levels 0-10, Rosetta-ready goals |
+| [HOW-TO-LEARN.md](HOW-TO-LEARN.md) | Study habits |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Text style (no em dashes, no watermarks) |
 
-- **Installer** (`mcp-arch.sh`): pacman packages, AUR helper, VM guest tools, i3 + polybar UI, ly login.
-- **Lessons** (`kyoto-learn`): hiragana, katakana, kanji, vocab, Kyoto dialect, bilingual prompts.
-- **Curriculum** (`curriculum/`): JSON lesson data; progress in `~/.local/share/kyoto-learn/progress.json`.
+## What the full install includes
+
+- **Installer** (`mcp-arch.sh`): packages, AUR, i3 + polybar UI, Japanese tools
+- **Lessons** (`kyoto-learn`): bilingual drills and progress tracking
+- **Curriculum** (`curriculum/`): JSON lesson data
+- **Shell** (`kyoto-motd`): bilingual login message
 
 ## Repository layout
 
 ```
 MCP-Arch/
-  mcp-arch.sh          Main installer
-  easy-install.sh      Clone repo and run installer
-  install/             Preflight, packages, desktop UI, Kyoto setup
-  config/              i3, polybar, picom templates
-  curriculum/          Lesson data
-  bin/                 kyoto-learn, kyoto-motd, system-verify
-  docs/                This documentation set
+  mcp-arch.sh              Main installer
+  easy-install.sh          Clone repo and run installer
+  install/                 Preflight, packages, desktop UI, Kyoto setup
+  config/                  i3, polybar, picom templates
+  curriculum/              Lesson data
+  bin/                     kyoto-learn, kyoto-motd, system-verify
+  docs/                    This documentation set
 ```
 
 ## Style note for contributors
 
 - No em dashes or en dashes in user-facing English. Use `-` or a comma.
 - No branding watermarks or "Powered by" lines in the UI.
-- Kyoto dialect copy is intentional; standard Japanese is taught before dialect (level 9).
+- Kyoto dialect copy is intentional; standard Japanese comes before dialect (level 9).

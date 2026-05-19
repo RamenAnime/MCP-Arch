@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Kyoto Learn OS - Arch installer (VM or physical)
-# Installs pacman + AUR stack, working i3 UI, and kyoto-learn curriculum.
+# Kyoto Learn OS - full desktop installer for Arch
+# Installs pacman + AUR stack, i3 UI, Japanese lessons, and shell immersion.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -31,11 +31,13 @@ if [ -f "${SCRIPT_DIR}/bin/system-verify" ]; then
   $SUDO_CMD install -m 0755 "${SCRIPT_DIR}/bin/system-verify" /usr/local/bin/system-verify
 fi
 
-echoinfo "Install complete for user ${TARGET_USER}."
-echoinfo "Run: system-verify   then log in and: kyoto-learn"
+echoinfo "Kyoto Learn OS install complete for ${TARGET_USER}."
+echoinfo "Run: system-verify   then log in to i3 and: kyoto-learn"
 echo ""
-echo "  VM:     log in with ly, or run startx"
-echo "  Update: ~/bin/update-system.sh"
+echo "  Log in: choose i3 at ly/GDM/SDDM, or run startx"
+echo "  Study:  Mod+Shift+J in i3, or kyoto-learn in a terminal"
+echo "  Docs:   docs/INSTALL-EXISTING-ARCH.md (existing Arch)"
+echo "          docs/INSTALL-FRESH-ARCH.md (if you installed Arch today)"
 echo ""
 
 case "${REBOOT_AFTER:-no}" in

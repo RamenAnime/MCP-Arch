@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Preflight checks and install profile (VM / physical). Sourced by mcp-arch.sh.
+# Preflight checks and install path. Sourced by mcp-arch.sh.
 
 INSTALL_PROFILE="${INSTALL_PROFILE:-}"
 REBOOT_AFTER="${REBOOT_AFTER:-no}"
@@ -50,18 +50,41 @@ preflight_run() {
   fi
 
   echo ""
-  echo "Install profile:"
-  echo "  1) Virtual machine (guest tools, safe defaults, no auto-reboot)"
-  echo "  2) Physical PC / laptop (firmware, optional GRUB theme)"
-  echo "  3) Desktop only (you already have Arch installed; recommended for existing systems)"
-  read -rp "Profile [1/2/3] (default 3 if unsure on existing Arch, else 1): " _prof
-  _prof="${_prof:-3}"
-  case "$_prof" in
-    2) INSTALL_PROFILE="physical" ; REBOOT_AFTER="ask" ;;
-    3) INSTALL_PROFILE="desktop" ; REBOOT_AFTER="no" ;;
-    *) INSTALL_PROFILE="vm" ; REBOOT_AFTER="no" ;;
+  echo "Kyoto Learn OS installs the FULL desktop (i3, polybar, Japanese lessons, shell immersion)."
+  echo ""
+  echo "Which situation matches you?"
+  echo ""
+  echo "  1) I still need to install Arch Linux first"
+  echo "     (read docs/INSTALL-FRESH-ARCH.md, then run this installer again)"
+  echo ""
+  echo "  2) Arch is already installed - full Kyoto Learn desktop (PC or laptop)"
+  echo ""
+  echo "  3) Arch is already installed in a VM - full desktop + guest tools"
+  echo ""
+  read -rp "Choice [1/2/3] (default 2): " _path
+  _path="${_path:-2}"
+
+  case "$_path" in
+    1)
+      echo ""
+      echoinfo "Install Arch first, then return here for the full Kyoto Learn desktop."
+      echo "  Guide: docs/INSTALL-FRESH-ARCH.md"
+      echo "  Wiki:  https://wiki.archlinux.org/title/Installation_guide"
+      echo ""
+      echo "After Arch is ready, run: ./easy-install.sh  (pick 2 or 3)"
+      exit 0
+      ;;
+    3)
+      INSTALL_PROFILE="existing-vm"
+      REBOOT_AFTER="no"
+      ;;
+    *)
+      INSTALL_PROFILE="existing"
+      REBOOT_AFTER="no"
+      ;;
   esac
-  echoinfo "Profile: ${INSTALL_PROFILE}"
+
+  echoinfo "Profile: ${INSTALL_PROFILE} (full desktop + Japanese integration)"
 
   read -rp "AUR helper [yay/paru] (default yay): " AUR_HELPER
   AUR_HELPER="${AUR_HELPER:-yay}"
@@ -74,7 +97,7 @@ preflight_run() {
   [ "$THEME_CHOICE" = "2" ] && THEME="cyan" || THEME="green"
 
   echo ""
-  if ! confirm "Proceed with install?" "Y"; then
+  if ! confirm "Proceed with full Kyoto Learn OS install?" "Y"; then
     echoerr "Cancelled."
     exit 7
   fi

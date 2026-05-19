@@ -29,7 +29,7 @@ packages_install_core() {
   )
 
   VM_PACKAGES=()
-  if [ "$INSTALL_PROFILE" = "vm" ] || [ "$INSTALL_PROFILE" = "physical" ]; then
+  if [ "$INSTALL_PROFILE" = "existing-vm" ]; then
     VM_PACKAGES=(
       open-vm-tools
       qemu-guest-agent
@@ -41,9 +41,6 @@ packages_install_core() {
   fi
 
   PHYSICAL_PACKAGES=()
-  if [ "$INSTALL_PROFILE" = "physical" ]; then
-    PHYSICAL_PACKAGES=(grub efibootmgr os-prober)
-  fi
 
   # Refresh mirrors (best effort)
   if command -v reflector >/dev/null 2>&1; then
@@ -117,15 +114,33 @@ packages_install_aur() {
 
   enable_user_services "$TARGET_USER"
 
-  if [ -f /usr/lib/systemd/system/ly.service ]; then
-    $SUDO_CMD systemctl enable ly.service 2>/dev/null || true
-    echoinfo "Login manager: ly (select i3 or Openbox session if asked)"
-  else
-    echowarn "ly not installed; use 'startx' after login or install ly from AUR."
-  fi
+  packages_configure_login_manager
 
-  if [ "$INSTALL_PROFILE" = "vm" ]; then
+  if [ "$INSTALL_PROFILE" = "existing-vm" ]; then
     $SUDO_CMD systemctl enable vmtoolsd.service 2>/dev/null || true
     $SUDO_CMD systemctl enable qemu-guest-agent.service 2>/dev/null || true
+  fi
+}
+
+packages_configure_login_manager() {
+  local dm active_dm=""
+  for dm in gdm sddm lightdm lxdm; do
+    if systemctl is-enabled "$dm.service" 2>/dev/null | grep -q enabled; then
+      active_dm="$dm"
+      break
+    fi
+  done
+
+  if [ -n "$active_dm" ]; then
+    echoinfo "Keeping ${active_dm} as login manager."
+    echoinfo "Log out and choose the i3 session, or run startx from a TTY."
+    return 0
+  fi
+
+  if [ -f /usr/lib/systemd/system/ly.service ]; then
+    $SUDO_CMD systemctl enable ly.service 2>/dev/null || true
+    echoinfo "Login manager: ly (select i3 at login)"
+  else
+    echowarn "ly not installed; use startx after login or install ly from AUR."
   fi
 }

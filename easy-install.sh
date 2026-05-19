@@ -6,6 +6,12 @@ REPO_URL="${KYOTO_REPO_URL:-https://github.com/RamenAnime/MCP-Arch.git}"
 INSTALL_DIR="${KYOTO_INSTALL_DIR:-$HOME/kyoto-learn-os}"
 
 echo "Kyoto Learn OS - easy installer"
+echo "Full desktop: i3 UI + Japanese lessons + shell immersion"
+echo ""
+echo "Pick your guide:"
+echo "  Need Arch first?     docs/INSTALL-FRESH-ARCH.md"
+echo "  Arch already there?  docs/INSTALL-EXISTING-ARCH.md"
+echo ""
 echo "Repository: $REPO_URL"
 echo ""
 
@@ -22,4 +28,7 @@ chmod +x mcp-arch.sh easy-install.sh bin/* install/*.sh config/polybar/launch.sh
 
 echo ""
 echo "Starting installer (sudo required)..."
+echo "  Arch not installed yet? Choose 1 in the installer (shows the Arch guide)."
+echo "  Arch ready? Choose 2 (PC) or 3 (VM) for the full Kyoto Learn desktop."
+echo ""
 exec sudo ./mcp-arch.sh

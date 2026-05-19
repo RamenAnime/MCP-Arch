@@ -33,10 +33,11 @@ XRES
   fi
   $SUDO_CMD chown "${TARGET_USER}:${TARGET_USER}" "${TARGET_HOME}/.Xresources"
 
-  # i3
+  # i3 (backup existing configs before replace)
   local i3_dir="${TARGET_HOME}/.config/i3"
   $SUDO_CMD mkdir -p "$i3_dir"
   backup_if_exists "${i3_dir}/config"
+  backup_if_exists "${i3_dir}/lock.sh"
   if [ -f "${repo_root}/config/i3/config" ]; then
     $SUDO_CMD cp "${repo_root}/config/i3/config" "${i3_dir}/config"
     $SUDO_CMD sed -i "s/@FG@/${fg}/g; s/@BG@/${bg}/g; s/@INACTIVE@/${inactive}/g; s/@URGENT@/${urgent}/g" "${i3_dir}/config"

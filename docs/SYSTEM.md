@@ -44,7 +44,7 @@ Never run `yay` with `sudo`.
 
 ## Virtual machine packages
 
-Profile **1** or **2** may install (skipped if not in repos):
+Installer choice **3** (Arch ready in a VM) installs these when available (skipped if not in repos):
 
 - `open-vm-tools` (VMware)
 - `qemu-guest-agent` (QEMU/KVM)
@@ -101,13 +101,12 @@ system-verify
 
 Checks: pacman, NetworkManager, i3, alacritty, polybar, jq, kyoto-learn, AUR helper, config files.
 
-## Physical PC boot
+## Bootloader (fresh Arch only)
 
-Profile **2** installs `grub` and `efibootmgr` helpers. You still run Arch install steps for your disk:
+The Kyoto Learn installer does **not** install Arch from ISO. Use [INSTALL-FRESH-ARCH.md](INSTALL-FRESH-ARCH.md) for GRUB or systemd-boot during the official Arch install.
 
-```bash
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
-```
+## Login manager coexistence
 
-See Arch wiki if you use BIOS instead of UEFI.
+If GDM, SDDM, or LightDM is already enabled, the installer **keeps** it. Install **ly** from AUR but does not enable it as default. Log out and pick the **i3** session, or use `startx`.
+
+If no display manager is active, **ly** is enabled when installed.
