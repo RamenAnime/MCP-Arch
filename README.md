@@ -40,11 +40,19 @@ system-verify    # check pacman, network, UI, lessons
 kyoto-learn      # start course (or Mod+Shift+J in i3)
 ```
 
-## Docs
+## Documentation (full index)
 
-- [docs/INSTALL.md](docs/INSTALL.md) - VM vs physical, Arch prerequisites, troubleshooting
-- [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) - 0% to Rosetta-ready path
-- [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md) - study habits
+**[docs/README.md](docs/README.md)** - start here
+
+| Guide | Contents |
+|-------|----------|
+| [docs/INSTALL.md](docs/INSTALL.md) | VM or main PC install, prerequisites, troubleshooting |
+| [docs/SYSTEM.md](docs/SYSTEM.md) | pacman, AUR, UI stack, updates, verification |
+| [docs/COMMANDS.md](docs/COMMANDS.md) | Commands and i3 / kyoto-learn shortcuts |
+| [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) | Levels 0-10, three writing systems, Rosetta-ready |
+| [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md) | First-language study habits |
+
+Copy style: use `-` between words, not em dashes. No UI watermarks.
 
 ## License
 
