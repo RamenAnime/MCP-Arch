@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# MCP-Arch Configuration Installer
+# Kyoto Learn OS Configuration Installer
 # Safe installer for existing i3 installations
 # Only applies configurations and themes - no package installation
 #
@@ -32,7 +32,7 @@ cat << "EOF"
 ╚═╝     ╚═╝ ╚═════╝╚═╝          ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
 EOF
 echo -e "${RESET}"
-echo -e "${CYAN}Configuration Installer - Theme Only${RESET}"
+echo -e "${CYAN}Kyoto Learn OS - Theme and i3 (lessons: kyoto-learn)${RESET}"
 echo -e "${CYAN}Safe for existing i3 installations${RESET}"
 echo ""
 
@@ -253,7 +253,7 @@ fi
 # FIX: Escaped i3 variables (e.g., $mod -> \$mod) to prevent shell expansion.
 cat > "$HOME/.config/i3/config" << EOF
 # i3 config - MCP THEME
-# Master Control Program Configuration
+# Kyoto Learn OS i3 configuration
 
 ###################
 # THEME SETTINGS  #
@@ -376,6 +376,9 @@ bindsym \$mod+Shift+0 move container to workspace \$ws10
 bindsym \$mod+Shift+c reload
 bindsym \$mod+Shift+r restart
 bindsym \$mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+
+# Kyoto Learn Japanese lessons
+bindsym \$mod+Shift+j exec kyoto-learn
 
 # Resize mode
 mode "resize" {
@@ -571,7 +574,7 @@ echo ""
 #==========================================
 echo ""
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-echo -e "${GREEN}MCP CONFIGURATION COMPLETE!${RESET}"
+echo -e "${GREEN}KYOTO LEARN CONFIGURATION COMPLETE!${RESET}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 echo ""
 echo -e "${CYAN}Applied configurations:${RESET}"
@@ -594,6 +597,6 @@ echo -e "  • Install cool-retro-term: ${GREEN}sudo pacman -S cool-retro-term${
 echo -e "  • Install polybar: ${GREEN}sudo pacman -S polybar${RESET}"
 echo -e "  • Install picom: ${GREEN}sudo pacman -S picom${RESET}"
 echo ""
-echo -e "${GREEN}MCP System Status: ONLINE${RESET}"
-echo -e "${GREEN}Access Level: GRANTED${RESET}"
+echo -e "${GREEN}Run lessons: kyoto-learn${RESET}"
+echo -e "${GREEN}Mod+Shift+J in i3 opens the course${RESET}"
 echo ""

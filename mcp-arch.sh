@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# MCP Arch Linux Interactive Installer
-# Creates an Arch-based MCP themed environment (i3-gaps, cool-retro-term, picom, polybar, ly, etc.)
+# Kyoto Learn OS - Arch Linux Interactive Installer
+# Arch desktop + immersive Japanese curriculum (hiragana, katakana, kanji, Kyoto dialect)
 # Designed to be run on a fresh Arch install (as root or via sudo).
 # WARNING: This script will install packages and modify user config files.
 # Always review before running. Use at your own risk.
@@ -129,7 +129,7 @@ BASE_PACKAGES=(
   ttf-terminus-nerd ttf-ibm-plex ttf-dejavu terminus-font
   ranger mpd ncmpcpp firefox vim neovim gotop bashtop pulseaudio pulseaudio-alsa pavucontrol
   plymouth archiso grub
-  zsh zsh-completions
+  zsh zsh-completions jq noto-fonts-cjk noto-fonts-emoji
 )
 
 AUR_PACKAGES=(
@@ -270,7 +270,7 @@ $SUDO_CMD mkdir -p "$NEOFETCH_DIR"
 backup_if_exists "${NEOFETCH_DIR}/config.conf"
 cat > "${NEOFETCH_DIR}/config.conf" <<'NEOCONF'
 print_info() {
-    info "██ MCP SYSTEM ██" title
+    info "██ KYOTO LEARN ██" title
     info "━━━━━━━━━━━━━━━━━━━━━━" line
     info "HOST" model
     info "SYSTEM" distro
@@ -309,6 +309,7 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 bindsym $mod+Return exec cool-retro-term
 bindsym $mod+d exec dmenu_run -fn 'Terminus-12' -nb '#001100' -nf '#0aff0a' -sb '#0aff0a' -sf '#001100'
+bindsym $mod+Shift+j exec kyoto-learn
 I3CFG
 
 $SUDO_CMD chown -R "${TARGET_USER}:${TARGET_USER}" "$I3_DIR"
@@ -432,12 +433,11 @@ alias mcp='neofetch'
 alias grid='pipes.sh -t 1 -R -r 0'
 clear
 echo "\033[1;32m"
-figlet -f banner "MCP SYSTEM"
+figlet -f banner "KYOTO LEARN"
 echo "\033[0;32m"
-echo "Master Control Program - ONLINE"
-echo "System Status: OPERATIONAL"
+echo "Kyoto Learn OS - 日本語 immersion"
+echo "Run: kyoto-learn  (Mod+Shift+J in i3)"
 echo "User: $(whoami)"
-echo "Access Level: ROOT"
 echo ""
 neofetch
 ZSHRC
@@ -445,17 +445,18 @@ ZSHRC
 else
   echowarn "$ZSHRC_FILE already exists; appending MCP aliases and startup message."
   cat >> "$ZSHRC_FILE" <<'ZSHAPP'
-# MCP additions
+# Kyoto Learn additions
 alias matrix='cmatrix -bas -C green'
 alias systeminfo='neofetch'
-alias mcp='neofetch'
+alias learn='kyoto-learn'
 alias grid='pipes.sh -t 1 -R -r 0'
-# MCP welcome banner
+# Kyoto welcome banner
 clear
 echo "\033[1;32m"
-figlet -f banner "MCP SYSTEM"
+figlet -f banner "KYOTO LEARN"
 echo "\033[0;32m"
-echo "Master Control Program - ONLINE"
+echo "Kyoto Learn OS - run: kyoto-learn"
+kyoto-motd 2>/dev/null || true
 neofetch
 ZSHAPP
 fi
@@ -496,13 +497,13 @@ cat > "${TARGET_HOME}/bin/update-system.sh" <<'UPD'
 #!/bin/bash
 clear
 echo -e "\033[1;32m"
-figlet "MCP SYSTEM UPDATE"
+figlet "KYOTO UPDATE"
 echo -e "\033[0;32m"
 echo "Initiating system synchronization..."
 sudo pacman -Syu
 echo "Checking for orphaned packages..."
 sudo pacman -Rns $(pacman -Qtdq) 2>/dev/null || true
-echo "System update complete. MCP status: OPTIMAL"
+echo "System update complete."
 UPD
 $SUDO_CMD chown "${TARGET_USER}:${TARGET_USER}" "${TARGET_HOME}/bin/update-system.sh"
 $SUDO_CMD chmod +x "${TARGET_HOME}/bin/update-system.sh"
@@ -516,8 +517,17 @@ MSH
 $SUDO_CMD chown "${TARGET_USER}:${TARGET_USER}" "${TARGET_HOME}/mcp-setup.sh"
 $SUDO_CMD chmod +x "${TARGET_HOME}/mcp-setup.sh"
 
+# Kyoto Learn curriculum + CLI
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "${SCRIPT_DIR}/install/kyoto-learn-setup.sh" ]; then
+  # shellcheck source=install/kyoto-learn-setup.sh
+  bash "${SCRIPT_DIR}/install/kyoto-learn-setup.sh" "$TARGET_USER" "$TARGET_HOME" "$SUDO_CMD" "$SCRIPT_DIR"
+else
+  echowarn "kyoto-learn-setup.sh not found; skip curriculum install."
+fi
+
 # Final messages
-echoinfo "MCP installation steps completed. Some actions may require manual verification (themes, plymouth, grub)."
+echoinfo "Kyoto Learn OS installation steps completed. Run: kyoto-learn"
 echoinfo "Configs are placed in ${TARGET_HOME}/.config and backed-up copies (if any) were renamed with .bak.TIMESTAMP"
 
 # Offer reboot with 60s countdown

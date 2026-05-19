@@ -1,0 +1,17 @@
+{
+  "system": "kyoto_dialect",
+  "intro_en": "Kyoto speech is polite Kansai: softer than Osaka, often uses どす/まっす instead of です/ます.",
+  "intro_ja": "京都弁は丁寧な関西弁です。「です」より「どす」、「ます」より「まっす」と言うことが多いです。",
+  "patterns": [
+    { "standard": "です", "kyoto": "どす", "example_en": "It is tasty.", "example_ja": "おいしいです。", "example_kyoto": "おいしゅうどす。" },
+    { "standard": "ます", "kyoto": "まっす", "example_en": "I will go.", "example_ja": "行きます。", "example_kyoto": "行きまっす。" },
+    { "standard": "だろう", "kyoto": "やろ", "example_en": "Probably.", "example_ja": "そうだろう。", "example_kyoto": "そうやろ。" },
+    { "standard": "違う", "kyoto": "ちゃう", "example_en": "That is wrong.", "example_ja": "違います。", "example_kyoto": "ちゃうわ。" },
+    { "standard": "ありがとう", "kyoto": "おおきに", "example_en": "Thanks.", "example_ja": "ありがとう。", "example_kyoto": "おおきに。" },
+    { "standard": "すみません", "kyoto": "すんまへん", "example_en": "Sorry.", "example_ja": "すみません。", "example_kyoto": "すんまへん。" },
+    { "standard": "いい", "kyoto": "ええ", "example_en": "Good / yes.", "example_ja": "いいです。", "example_kyoto": "ええどす。" },
+    { "standard": "とても", "kyoto": "ほんま", "example_en": "Really.", "example_ja": "とても美しい。", "example_kyoto": "ほんまきれい。" },
+    { "standard": "大きい", "kyoto": "でっけえ", "example_en": "Big.", "example_ja": "大きい。", "example_kyoto": "でっけえ。" },
+    { "standard": "小さい", "kyoto": "ちっちゃい", "example_en": "Small.", "example_ja": "小さい。", "example_kyoto": "ちっちゃい。" }
+  ]
+}

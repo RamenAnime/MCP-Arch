@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Daily bilingual message of the day for shell login
+if [ -d /usr/share/kyoto-learn ]; then
+  ROOT="/usr/share/kyoto-learn"
+else
+  ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+export KYOTO_LEARN_ROOT="$ROOT"
+# shellcheck source=../lib/kyoto-common.sh
+source "$ROOT/lib/kyoto-common.sh" 2>/dev/null || true
+
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+RESET='\033[0m'
+
+echo -e "${GREEN}京都 Learn OS${RESET} ${CYAN}| Kyoto Japanese immersion${RESET}"
+echo -e "Today: study a little every day (毎日少し) · run: ${GREEN}kyoto-learn${RESET}"
+if command -v jq >/dev/null 2>&1 && [ -f "$(kyoto_progress_file 2>/dev/null)" ]; then
+  lv=$(jq -r '.level // 0' "$(kyoto_progress_file)" 2>/dev/null || echo 0)
+  xp=$(jq -r '.xp // 0' "$(kyoto_progress_file)" 2>/dev/null || echo 0)
+  echo -e "Level ${lv} · XP ${xp} · 頑張って (keep going)"
+fi
+echo

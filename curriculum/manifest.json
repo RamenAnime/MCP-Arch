@@ -1,0 +1,23 @@
+{
+  "title": "Kyoto Learn OS",
+  "subtitle": "Zero to fluent foundation (hiragana, katakana, kanji, vocab, Kyoto dialect)",
+  "writing_order": ["hiragana", "katakana", "kanji"],
+  "levels": [
+    { "id": 0, "name": "Start here", "en": "How Japanese works", "ja": "日本語のしくみ", "kyoto": "日本語の仕組み、はじめましょか", "goal": "Sounds, word order, why three writing systems exist" },
+    { "id": 1, "name": "Hiragana I", "en": "あ row through た row", "ja": "ひらがな（前半）", "kyoto": "ひらがな、はじめの一歩や", "goal": "Read and write basic hiragana" },
+    { "id": 2, "name": "Hiragana II", "en": "な row through ん", "ja": "ひらがな（後半）", "kyoto": "ひらがな、仕上げや", "goal": "Complete hiragana including ゃゅょ and っ" },
+    { "id": 3, "name": "Katakana", "en": "Loanwords and foreign names", "ja": "カタカナ", "kyoto": "カタカナ、外国語向けや", "goal": "Read menus, game titles, brand names" },
+    { "id": 4, "name": "Kanji I", "en": "Numbers, people, day", "ja": "漢字（基礎）", "kyoto": "漢字、ええとこからや", "goal": "20 essential kanji with readings" },
+    { "id": 5, "name": "Kanji II", "en": "Places, actions, time", "ja": "漢字（生活）", "kyoto": "漢字、日常で使うやつ", "goal": "40 more kanji in context sentences" },
+    { "id": 6, "name": "Core vocab", "en": "First 200 words", "ja": "ことば", "kyoto": "言葉、身につけましょ", "goal": "Survival vocabulary with mixed JA/EN UI" },
+    { "id": 7, "name": "Sentences", "en": "Grammar without jargon", "ja": "文", "kyoto": "文、組み立てる練習や", "goal": "Particles は が を in short Kyoto-flavored lines" },
+    { "id": 8, "name": "Immersion", "en": "OS and daily drills", "ja": "没入", "kyoto": "没入、毎日ちょっとずつ", "goal": "80% Japanese prompts in lessons" },
+    { "id": 9, "name": "Kyoto dialect", "en": "Kansai flavor", "ja": "京都弁", "kyoto": "京都弁、ええ感じで", "goal": "です→どす、ます→まっす patterns" },
+    { "id": 10, "name": "Rosetta ready", "en": "Bridge course", "ja": "次の一歩", "kyoto": "次の一歩、Rosetta Stone行けます", "goal": "Self-study habits and review loops" }
+  ],
+  "rosetta_bridge": {
+    "en": "You can move to Rosetta Stone or any app when you: read all hiragana/katakana slowly, know 60+ kanji, handle short dialogs, and review 15 minutes daily.",
+    "ja": "ひらがな・カタカナが読めて、漢字60字以上、短い会話ができ、毎日15分復習できたら Rosetta Stone などへ進めます。",
+    "kyoto": "ひらがな・カタカナ読めて、漢字六十字くらい、短い会話できて、毎日一刻復習できたら Rosetta Stone 行ってええで。"
+  }
+}

@@ -1,0 +1,255 @@
+#!/usr/bin/env bash
+# Kyoto Learn OS - immersive Japanese (hiragana, katakana, kanji, vocab, Kyoto dialect)
+set -euo pipefail
+
+if [ -d /usr/share/kyoto-learn ]; then
+  ROOT="/usr/share/kyoto-learn"
+else
+  ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+export KYOTO_LEARN_ROOT="$ROOT"
+# shellcheck source=../lib/kyoto-common.sh
+source "$ROOT/lib/kyoto-common.sh"
+
+GREEN='\033[1;32m'
+CYAN='\033[1;36m'
+MAGENTA='\033[1;35m'
+YELLOW='\033[1;33m'
+RESET='\033[0m'
+
+require_jq() {
+  if ! kyoto_has_jq; then
+    echo "jq is required. Install: sudo pacman -S jq"
+    exit 1
+  fi
+}
+
+show_banner() {
+  clear
+  echo -e "${GREEN}"
+  printf '  ╔══════════════════════════════════════╗\n'
+  printf '  ║   京都 Learn OS  /  Kyoto Learn OS   ║\n'
+  printf '  ║   ひらがな · カタカナ · 漢字 · 語彙   ║\n'
+  printf '  ╚══════════════════════════════════════╝\n'
+  echo -e "${RESET}"
+}
+
+show_how_to_learn() {
+  show_banner
+  kyoto_bilingual_line \
+    "Learn Japanese like a first language: hear patterns, copy short chunks, and use the language in daily tiny doses." \
+    "母語のように学ぶ：短い塊を聞いて、まねして、毎日少し使う。" \
+    "母語みたいに、短いんを聞いてまねして、毎日ちょっと使うんや。"
+  echo
+  cat <<'GUIDE'
+1. Sound first (levels 0-2): master hiragana before kanji.
+2. Writing second: trace kana on paper 10 minutes daily; type romaji here to check memory.
+3. Meaning third: one word per day in real life (label objects at home).
+4. Immersion fourth: switch this OS UI mix to more Japanese as levels rise.
+5. Kyoto dialect fifth: after standard polite forms feel easy, add どす/まっす.
+6. Rosetta Stone sixth: use it for listening/speaking drills once you read all kana.
+
+Daily loop (15 min): 5 min kana · 5 min vocab · 5 min sentences · review yesterday.
+GUIDE
+  kyoto_pause
+}
+
+show_progress() {
+  require_jq
+  kyoto_init_progress
+  local pf level xp h k ka v
+  pf="$(kyoto_progress_file)"
+  level=$(jq -r '.level' "$pf")
+  xp=$(jq -r '.xp' "$pf")
+  h=$(jq '.hiragana_done | length' "$pf")
+  k=$(jq '.katakana_done | length' "$pf")
+  ka=$(jq '.kanji_done | length' "$pf")
+  v=$(jq '.vocab_done | length' "$pf")
+  show_banner
+  echo -e "${CYAN}Level:${RESET} $level   ${CYAN}XP:${RESET} $xp"
+  echo -e "Hiragana: $h / 46   Katakana: $k / 46   Kanji: $ka / 32   Vocab: $v / 36"
+  echo
+  jq -r '.levels[] | "  \(.id)) \(.name) - \(.en)"' "$ROOT/curriculum/manifest.json" 2>/dev/null || true
+  kyoto_pause
+}
+
+mark_kana_done() {
+  local system="$1" char="$2"
+  local pf tmp arrkey
+  pf="$(kyoto_progress_file)"
+  arrkey="${system}_done"
+  tmp="$(mktemp)"
+  jq --arg c "$char" --arg k "$arrkey" \
+    'if (.[$k] | index($c)) then . else .[$k] += [$c] | .xp += 2 end' "$pf" > "$tmp" && mv "$tmp" "$pf"
+}
+
+drill_kana() {
+  local file="$1" system="$2"
+  require_jq
+  kyoto_init_progress
+  local total i item kana romaji en tip
+  total=$(jq '.items | length' "$file")
+  for ((i=0; i<total; i++)); do
+    item=$(jq -c ".items[$i]" "$file")
+    kana=$(echo "$item" | jq -r '.kana')
+    romaji=$(echo "$item" | jq -r '.romaji')
+    en=$(echo "$item" | jq -r '.en')
+    tip=$(echo "$item" | jq -r '.kyoto_tip // .example // empty')
+    show_banner
+    kyoto_bilingual_line "Type the romaji for this character:" "この文字のローマ字を入力：" "この文字、ローマ字で書いてみ。"
+    echo -e "${MAGENTA}  ┌────┐${RESET}"
+    echo -e "${MAGENTA}  │ ${kana} │${RESET}"
+    echo -e "${MAGENTA}  └────┘${RESET}"
+    echo -e "${CYAN}Hint:${RESET} $en"
+    [ -n "$tip" ] && echo -e "${YELLOW}Note:${RESET} $tip"
+    printf "\nRomaji > "
+    read -r ans || ans=""
+    ans=$(echo "$ans" | tr '[:upper:]' '[:lower:]' | xargs)
+    if [ "$ans" = "$romaji" ]; then
+      echo -e "${GREEN}✓ 正解 / Correct!${RESET}"
+      mark_kana_done "$system" "$kana"
+    else
+      echo -e "Answer: ${GREEN}${romaji}${RESET}  (you typed: $ans)"
+    fi
+    kyoto_pause
+  done
+}
+
+drill_kanji() {
+  require_jq
+  kyoto_init_progress
+  local file="$ROOT/curriculum/kanji-starter.json"
+  local total i item kanji readings en sja sen sky
+  total=$(jq '.items | length' "$file")
+  for ((i=0; i<total; i++)); do
+    item=$(jq -c ".items[$i]" "$file")
+    kanji=$(echo "$item" | jq -r '.kanji')
+    readings=$(echo "$item" | jq -r '.readings')
+    en=$(echo "$item" | jq -r '.en')
+    sja=$(echo "$item" | jq -r '.sentence_ja')
+    sen=$(echo "$item" | jq -r '.sentence_en')
+    sky=$(echo "$item" | jq -r '.kyoto')
+    show_banner
+    kyoto_bilingual_line "What does this kanji mean? (English OK)" "この漢字の意味は？" "この漢字、意味わかる？"
+    echo -e "${MAGENTA}  ${kanji}${RESET}  (${readings})"
+    printf "Your answer > "
+    read -r ans || ans=""
+    echo
+    echo -e "${CYAN}Meaning:${RESET} $en"
+    echo -e "${CYAN}Sentence:${RESET} $sja"
+    echo -e "${CYAN}         ${RESET} $sen"
+    kyoto_bilingual_line "" "" "$sky"
+    mark_kana_done "kanji" "$kanji"
+    kyoto_pause
+  done
+}
+
+drill_vocab() {
+  require_jq
+  kyoto_init_progress
+  local file="$ROOT/curriculum/vocab-core.json"
+  local total i item ja romaji en ky
+  total=$(jq '.items | length' "$file")
+  for ((i=0; i<total; i++)); do
+    item=$(jq -c ".items[$i]" "$file")
+    ja=$(echo "$item" | jq -r '.ja')
+    romaji=$(echo "$item" | jq -r '.romaji')
+    en=$(echo "$item" | jq -r '.en')
+    ky=$(echo "$item" | jq -r '.kyoto')
+    show_banner
+    kyoto_bilingual_line "What does this mean?" "意味は？" "意味なに？"
+    echo -e "${MAGENTA}  ${ja}${RESET}  (${romaji})"
+    printf "Your answer > "
+    read -r ans || ans=""
+    echo
+    echo -e "${GREEN}${en}${RESET}"
+    kyoto_bilingual_line "Standard Japanese" "標準語: $ja" "京都: $ky"
+    mark_kana_done "vocab" "$ja"
+    kyoto_pause
+  done
+}
+
+show_kyoto_dialect() {
+  require_jq
+  show_banner
+  jq -r '.intro_en, "", .intro_ja' "$ROOT/curriculum/kyoto-dialect.json"
+  echo
+  local n i
+  n=$(jq '.patterns | length' "$ROOT/curriculum/kyoto-dialect.json")
+  for ((i=0; i<n; i++)); do
+    echo -e "${CYAN}---${RESET}"
+    jq -r ".patterns[$i] | \"\(.standard) → \(.kyoto)\n  JA: \(.example_ja)\n  EN: \(.example_en)\n  京都: \(.example_kyoto)\"" \
+      "$ROOT/curriculum/kyoto-dialect.json"
+    echo
+  done
+  kyoto_pause
+}
+
+level_lesson() {
+  local id="$1"
+  show_banner
+  jq -r --argjson id "$id" '.levels[] | select(.id==$id) | "Level \(.id): \(.name)\nEN: \(.en) / \(.goal)\nJA: \(.ja)\n京都: \(.kyoto)\n"' \
+    "$ROOT/curriculum/manifest.json"
+  case "$id" in
+    0) show_how_to_learn; return ;;
+    1) drill_kana "$ROOT/curriculum/hiragana.json" "hiragana" ;;
+    2) drill_kana "$ROOT/curriculum/hiragana.json" "hiragana" ;;
+    3) drill_kana "$ROOT/curriculum/katakana.json" "katakana" ;;
+    4|5) drill_kanji ;;
+    6) drill_vocab ;;
+    9) show_kyoto_dialect ;;
+    10)
+      jq -r '.rosetta_bridge | "EN: \(.en)\nJA: \(.ja)\n京都: \(.kyoto)"' "$ROOT/curriculum/manifest.json"
+      kyoto_pause
+      ;;
+    *)
+      kyoto_bilingual_line "Practice writing on paper, then run drills from the main menu." \
+        "紙に書いてから、メニューの練習をしてください。" \
+        "紙に書いてから、練習してな。"
+      kyoto_pause
+      ;;
+  esac
+  if kyoto_has_jq; then
+    local pf tmp
+    pf="$(kyoto_progress_file)"
+    tmp="$(mktemp)"
+    jq --argjson lv "$id" 'if .level < $lv then .level = $lv else . end | .xp += 5' "$pf" > "$tmp" && mv "$tmp" "$pf"
+  fi
+}
+
+main_menu() {
+  while true; do
+    show_banner
+    local lv
+    lv="$(kyoto_get_level)"
+    echo -e "${CYAN}Current level:${RESET} $lv  ${CYAN}(mixed EN/JA immersion)${RESET}"
+    echo
+    echo "  1) Continue guided path (level lesson)"
+    echo "  2) Hiragana drill (ひらがな)"
+    echo "  3) Katakana drill (カタカナ)"
+    echo "  4) Kanji drill (漢字)"
+    echo "  5) Vocabulary drill (ことば)"
+    echo "  6) Kyoto dialect (京都弁)"
+    echo "  7) How to learn Japanese (first-language method)"
+    echo "  8) Progress / 進捗"
+    echo "  9) Quit / 終わる"
+    echo
+    printf "Choice > "
+    read -r choice || exit 0
+    case "$choice" in
+      1) level_lesson "$lv" ;;
+      2) drill_kana "$ROOT/curriculum/hiragana.json" "hiragana" ;;
+      3) drill_kana "$ROOT/curriculum/katakana.json" "katakana" ;;
+      4) drill_kanji ;;
+      5) drill_vocab ;;
+      6) show_kyoto_dialect ;;
+      7) show_how_to_learn ;;
+      8) show_progress ;;
+      9|q|Q) exit 0 ;;
+      *) echo "Invalid choice" ; sleep 1 ;;
+    esac
+  done
+}
+
+kyoto_init_progress
+main_menu

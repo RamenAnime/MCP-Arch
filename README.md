@@ -1,13 +1,14 @@
-# MCP Arch Installer
+# Kyoto Learn OS (mcp-arch)
 
-Interactive installer for the MCP-themed Arch environment.
+Arch Linux installer for an immersive **Kyoto dialect Japanese** learning desktop. Teaches reading and writing from zero knowledge through **hiragana**, **katakana**, and **kanji**, with vocabulary and Kyoto-flavored speech, using mixed English and Japanese in the shell and lesson app.
 
 ## What it does
-- Installs i3-gaps, cool-retro-term, picom, polybar, polybar configs, neofetch, fonts and other utilities.
+- Installs i3-gaps, terminal, polybar, fonts (including CJK), `jq`, and utilities.
+- Installs **Kyoto Learn** (`kyoto-learn` CLI) with full curriculum under `/usr/share/kyoto-learn`.
+- Immersive login: bilingual motd, **Mod+Shift+J** opens lessons in i3.
 - Installs AUR packages using `yay` (default) or `paru` if chosen.
-- Installs and enables `ly` login manager.
-- Applies MCP-themed dotfiles under the target user's home (`~/.config/*`).
-- Creates convenience scripts: `~/bin/update-system.sh` and `~/mcp-setup.sh`.
+- Optional retro terminal theme (green or cyan).
+- Progress saved in `~/.local/share/kyoto-learn/progress.json`.
 
 ## Usage
 1. Upload `mcp-arch.sh` to your Arch machine (or clone repo).
@@ -22,9 +23,11 @@ Interactive installer for the MCP-themed Arch environment.
 
 The installer will prompt for:
 - AUR helper choice (yay default)
-- Theme choice (MCP Green or Cyan/Blue)
+- Theme choice (green or cyan terminal)
 
-The script will reboot automatically after a 60 second countdown (you can cancel with Ctrl-C).
+After install, run **`kyoto-learn`** to start lessons. See [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) and [docs/HOW-TO-LEARN.md](docs/HOW-TO-LEARN.md).
+
+The script may reboot automatically after a 60 second countdown (you can cancel with Ctrl-C).
 
 ## Notes & Safety
 - Review the script before running. It installs packages and writes config files.
@@ -33,5 +36,5 @@ The script will reboot automatically after a 60 second countdown (you can cancel
 - The script uses `sudo` where appropriate if not run as root.
 
 ## License
-MIT — feel free to fork and adapt.
+MIT - feel free to fork and adapt.
 
