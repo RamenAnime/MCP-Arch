@@ -53,9 +53,9 @@ preflight_run() {
   echo "Install profile:"
   echo "  1) Virtual machine (guest tools, safe defaults, no auto-reboot)"
   echo "  2) Physical PC / laptop (firmware, optional GRUB theme)"
-  echo "  3) Desktop only (skip guest tools; you already have a base Arch install)"
-  read -rp "Profile [1/2/3] (default 1): " _prof
-  _prof="${_prof:-1}"
+  echo "  3) Desktop only (you already have Arch installed; recommended for existing systems)"
+  read -rp "Profile [1/2/3] (default 3 if unsure on existing Arch, else 1): " _prof
+  _prof="${_prof:-3}"
   case "$_prof" in
     2) INSTALL_PROFILE="physical" ; REBOOT_AFTER="ask" ;;
     3) INSTALL_PROFILE="desktop" ; REBOOT_AFTER="no" ;;

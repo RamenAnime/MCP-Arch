@@ -2,17 +2,28 @@
 
 ## Installer (once)
 
-```bash
-git clone https://github.com/RamenAnime/MCP-Arch.git
-cd MCP-Arch
-chmod +x mcp-arch.sh easy-install.sh
-sudo ./mcp-arch.sh
-```
-
-One-liner:
+**Already on Arch** (see [EXISTING-ARCH.md](EXISTING-ARCH.md)):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
+# profile 3) Desktop only
+```
+
+**Lessons only** (no i3):
+
+```bash
+git clone https://github.com/RamenAnime/MCP-Arch.git
+cd MCP-Arch
+sudo ./install/lessons-only.sh
+```
+
+**Full install** (clone):
+
+```bash
+git clone https://github.com/RamenAnime/MCP-Arch.git
+cd MCP-Arch
+chmod +x mcp-arch.sh easy-install.sh install/lessons-only.sh
+sudo ./mcp-arch.sh
 ```
 
 ## Daily use

@@ -6,6 +6,7 @@ All guides for installing, using, and studying on this system. Use a normal hyph
 
 | Doc | Who it is for |
 |-----|----------------|
+| **[EXISTING-ARCH.md](EXISTING-ARCH.md)** | **You already run Arch and want an easy add-on install** |
 | [INSTALL.md](INSTALL.md) | First-time install on Arch (VM or main PC) |
 | [SYSTEM.md](SYSTEM.md) | pacman, AUR, desktop UI, updates, verification |
 | [COMMANDS.md](COMMANDS.md) | Commands and keyboard shortcuts |
@@ -27,14 +28,23 @@ All guides for installing, using, and studying on this system. Use a normal hyph
 
 Same as above, but choose profile **2) Physical PC** and complete GRUB if you have not already.
 
-**Only study (Arch already set up)**
+**Already on Arch (full desktop + lessons)**
+
+See **[EXISTING-ARCH.md](EXISTING-ARCH.md)** or:
 
 ```bash
-sudo ./mcp-arch.sh
+curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
 # profile 3) Desktop only
 ```
 
-Or run `kyoto-learn` alone if curriculum is already installed under `/usr/share/kyoto-learn`.
+**Lessons only (keep GNOME/KDE/Hyprland, no i3)**
+
+```bash
+git clone https://github.com/RamenAnime/MCP-Arch.git
+cd MCP-Arch
+sudo ./install/lessons-only.sh
+kyoto-learn
+```
 
 ## What this project includes
 

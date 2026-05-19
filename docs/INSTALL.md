@@ -1,5 +1,22 @@
 # Install Kyoto Learn OS (VM or main PC)
 
+## Already have Arch installed?
+
+If Arch is already on your machine and you only want to add Kyoto Learn OS, use the short guide:
+
+**[EXISTING-ARCH.md](EXISTING-ARCH.md)** - one-command install, profile **3**, no reinstall.
+
+Quick version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
+# When asked: profile 3) Desktop only
+```
+
+Lessons only (no i3 changes): `sudo ./install/lessons-only.sh` from a cloned repo.
+
+---
+
 ## What you need first
 
 1. A working **Arch Linux** base (official install guide: https://wiki.archlinux.org/title/Installation_guide )
@@ -38,11 +55,11 @@ sudo ./mcp-arch.sh
 
 ## Installer prompts
 
-| Prompt | VM | Physical PC |
-|--------|----|-------------|
-| Profile | **1) Virtual machine** | **2) Physical PC** |
-| AUR helper | yay (default) | yay |
-| Reboot | Skipped by default | You choose |
+| Prompt | Fresh VM | Physical PC | **Already on Arch** |
+|--------|----------|---------------|---------------------|
+| Profile | **1) Virtual machine** | **2) Physical PC** | **3) Desktop only** |
+| AUR helper | yay (default) | yay | yay or paru |
+| Reboot | Skipped | You choose | Usually not needed |
 
 ## After install
 

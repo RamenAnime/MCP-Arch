@@ -4,7 +4,15 @@ Arch Linux desktop for learning **Kyoto dialect Japanese** from zero: hiragana, 
 
 Designed for an **easy install in a VM** or as a **daily driver** after a standard Arch base install.
 
-## Quick install
+## Already on Arch?
+
+You do not need to reinstall. See **[docs/EXISTING-ARCH.md](docs/EXISTING-ARCH.md)** for the fastest path (one command, pick profile **3**).
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/RamenAnime/MCP-Arch/main/easy-install.sh | bash
+```
+
+## Quick install (fresh Arch base)
 
 **You need Arch Linux installed first** (user with sudo). Then:
 
@@ -46,6 +54,7 @@ kyoto-learn      # start course (or Mod+Shift+J in i3)
 
 | Guide | Contents |
 |-------|----------|
+| [docs/EXISTING-ARCH.md](docs/EXISTING-ARCH.md) | **Already on Arch:** easy install, profile 3, lessons-only |
 | [docs/INSTALL.md](docs/INSTALL.md) | VM or main PC install, prerequisites, troubleshooting |
 | [docs/SYSTEM.md](docs/SYSTEM.md) | pacman, AUR, UI stack, updates, verification |
 | [docs/COMMANDS.md](docs/COMMANDS.md) | Commands and i3 / kyoto-learn shortcuts |
